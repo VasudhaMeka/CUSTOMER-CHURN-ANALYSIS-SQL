@@ -58,7 +58,8 @@ group by tenure_group;
 
 -- 3. By Internet Service
 select internet_service, count(*) as total,
-sum(case when churn_label = 'Yes' then 1 else 0 end) as churned
+sum(case when churn_label = 'Yes' then 1 else 0 end) as churned,
+round(sum(case when churn_label = 'Yes' then 1 else 0 end) * 100 / count(*),2) as churn_rate
 from customers
 group by internet_service;
 
@@ -67,6 +68,12 @@ select senior_citizen, count(*) as total,
 sum(case when churn_label = 'Yes' then 1 else 0 end) as churn_rate
 from customers
 group by senior_citizen;
+
+-- 4. By Payment Method
+select payment_method, count(*) as total,
+sum(case when churn_label = 'Yes' then 1 else 0 end) as churn_rate
+from customers
+group by payment_method;
 
 -- Monthly Charges & CLTV
 -- 1. Average Monthly Charges vs Churn
